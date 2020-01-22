@@ -1,0 +1,106 @@
+<html>
+<body>
+<h2 align=center>SNIS console Notes</h2>
+<p>The basic idea is that we can run many (but not all) of the Space Nerds in Space
+bridge stations on
+a Raspberry Pi, and have an arduino connected to the Pi, and connected to the arduino
+can be a load of potentiometers and switches and LEDs.  These potentiometers and
+switches can be logically connnected to buttons and sliders within the game.  The arduino
+can poll the state of the switches and potentiometers and report changes to the game
+via the USB serial back to a process on the the raspberry pi which can then feed these
+changes into the game via the interface provided by
+<a href="https://github.com/smcameron/space-nerds-in-space/blob/master/snis-device-io.h">snis-device-io.h</a>.
+Likewise, LEDS for warning lights, etc. can be controlled from the game via USB serial to
+to the arduino.  In this way we can build a physical console for each of the stations to
+make the game seem a little more like a spaceship and little less like a computer game.
+
+<hr>
+<b>Wed Jan 22 11:36:04 EST 2020</b>
+Here is rough drawing for a circuit for a station.  There are two 16 channel multiplexers
+allowing for 32 potentiometers or switches.  The channels on the multiplexers are not
+selected independently, but in parallel.  Two analog inputs on the arduino sample one
+channel from each of the two multiplexers.
+
+<p align=center><img src="snis-console-circuit-sketch-2020-01-22.jpg", width=85%>
+
+<p>On the output side, two daisy chained shift registers allow up to 16 LEDs to be
+controlled. Likely I will need to add NPN transistors to drive each of the LEDs to avoid
+drawing too much current from the shift registers.
+
+<p>Pseudocode for the arduino will be something along these lines:
+
+<pre>
+
+	static int new_value[32] = { 0 };
+	static int old_value[32] = { 0 };
+	static int led_status[16] = { 0 };
+
+	setup()
+	{
+		Set up 4 digital outputs D4 thru D7 for selecting the multiplexer channels.
+		Set up 2 analog inputs for the multiplexer signals.
+		Set up 3 digital outputs for the shift register controls
+		set up interrupt handler for incoming serial data
+	}
+
+	select_multiplexer_channel(int n)
+	{
+		D4 = i &amp; 0x01;
+		D5 = (i &gt;&gt; 1) & 0x01;
+		D5 = (i &gt;&gt; 2) & 0x01;
+		D5 = (i &gt;&gt; 3) & 0x01;
+	}
+
+	sample_inputs_from_multiplexer(int new_value[])
+	{
+
+		for (int i = 0; i &lt; 16; i++) {
+			select_multiplexer_channel(i);
+			new_value[i] = read_multiplexer(0);
+			new_value[i + 16] = read_multiplexer(1);
+		}
+	}
+
+	transmit_changes(new_value, old_value)
+	{
+		for (i = 0; i &lt; 32; i++) {
+			if (old_value[i] != new_value[i])
+				transmit_value(i, new_value[i]);
+		}
+	}
+
+	update_led_status()
+	{
+		/* Shift LED data out to shift register */
+		for (i = 0; i &lt; 16; i++) {
+			set DS = 0;
+			set ST_CP = led_status[i];
+			set DS = 1;
+		}
+		set DS = 0;
+
+		/* Latch LED data (need to double check this is how it works) */
+		set SH_CP = 0;
+		set SH_CP = 1;
+		set SH_CP = 0;
+	}
+
+	serial_interrupt_handler()
+	{
+		/* still need to work out whatever the protocol is for LED data */
+		/* Could be just pairs of bytes. */
+		get_character_from_serial()
+		decode_character();
+	}
+
+	loop()
+	{
+		sample_inputs_from_multiplexer(new_value);
+		transmit_changes(new_value, old_value);
+		memcpy(old_value, new_value, sizeof(old_value));
+		update_led_status();
+	}
+</pre>
+<hr>
+</body>
+</html>
