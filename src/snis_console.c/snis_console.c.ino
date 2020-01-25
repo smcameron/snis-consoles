@@ -23,6 +23,11 @@
 static const int mux_select[4] = { 4, 5, 6, 7 };
 static const int mux_data[2] = { A2, A3 };
 
+/* Changes below +/- 3 won't register... cuts down on spurious triggers
+ * Might be able to tighten this up when no longer using the breadboard
+ * when the real circuit is built. */
+#define MUX_SIGNAL_THRESHOLD 3
+
 static int current_data[32] = { 0 };
 static int old_data[32] = { 0 };
 
@@ -55,9 +60,9 @@ void read_mux_data(int current_data[])
 
 void transmit_data(int datum, int value)
 {
-	Serial.print("Value ");
+	Serial.print("#");
 	Serial.print(datum);
-	Serial.print(" changed to ");
+	Serial.print("=");
 	Serial.println(value);
 	delay(1000);
 }
@@ -67,7 +72,7 @@ void transmit_changed_data(int current_data[], int old_data[])
 	int i;
 
 	for (i = 0; i < 32; i++) {
-		if (current_data[i] != old_data[i])
+		if (abs(current_data[i] - old_data[i]) > MUX_SIGNAL_THRESHOLD)
 			transmit_data(i, current_data[i]);
 	}
 }
