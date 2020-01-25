@@ -64,7 +64,6 @@ void transmit_data(int datum, int value)
 	Serial.print(datum);
 	Serial.print("=");
 	Serial.println(value);
-	delay(1000);
 }
 
 void transmit_changed_data(int current_data[], int old_data[])
