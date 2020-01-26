@@ -20,6 +20,25 @@ most well-known and popular thing in its class, and most likely to be something 
 other people will be <em>able</em> to work with.
 
 <hr>
+<b>Sat Jan 25 19:38:29 EST 2020</b>
+<p>Made some progress, there's a new program in the space-nerds-in-space repo called snis_arduino
+that reads from the arduino and passes along commands from the arduino to snis_client.  I updated
+the program which runs on the arduino itself (snis-console.c.ino) so it actually works.  The main
+change I made was to switch to a text protocol from binary. This avoids de-syncing
+as I can look for a newline to delimit the commands. Now the commands from the arduino to the
+host (raspberry pi) are of the form: "#xxx=yyy\n", where xxx is the input number (0 - 31) and
+yyy is the value for that input.  The values are only reported to the host if they differ from
+the previous sampling by more than 3.
+
+<p>Another change I made on the host side (snis_arduino) has to do with the problem I was seeing
+in which it would read a little bit then quit upon encountering EOF.  It turns out that reading
+from /dev/ttyACM0 is apparently non-blocking, despite not opening it with O_NONBLOCK, which
+sort of surprises me.  So I changed the code to simply wait for a few milliseconds and try again
+upon encountering EOF, and this seemed to make it work.
+
+<p>Video here: <a href="https://www.youtube.com/watch?v=51ljGNx3px4">https://www.youtube.com/watch?v=51ljGNx3px4</a>.
+
+<hr>
 <b>Wed Jan 22 11:36:04 EST 2020</b>
 Here is rough drawing for a circuit for a station.  There are two 16 channel multiplexers
 allowing for 32 potentiometers or switches.  The channels on the multiplexers are not
