@@ -20,6 +20,17 @@ most well-known and popular thing in its class, and most likely to be something 
 other people will be <em>able</em> to work with.
 
 <hr>
+<b>Wed Jan 29 10:23:41 EST 2020</b>
+<p>I changed the protocol used over the serial USB so that the '#' is replaced by the first
+letter of the station, so 'E' for engineering, 'C' for comms, 'W' for weapons, 'S' for science,
+'D' for demon, 'N' for navigation.  Only engineering is implemented yet.  I'm using a #define
+to control which station the code compiles for.
+<p>Ordered 20 ULN2803 darlington arrays to drive LEDs from amazon, should be here in 2-4 weeks.
+Ordered some shift registers and male pin headers from futurlec, who knows when those will arrive.
+(I noticed there are some male pin heads lying around HackRVA though, so no need to wait
+for those, ha.)
+<p>Looking into building a vacuum forming machine to use for making the console cases.
+<hr>
 <b>Sat Jan 25 19:38:29 EST 2020</b>
 <p>Made some progress, there's a new program in the space-nerds-in-space repo called snis_arduino
 that reads from the arduino and passes along commands from the arduino to snis_client.  I updated
