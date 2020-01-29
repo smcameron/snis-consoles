@@ -31,6 +31,27 @@ static const int mux_data[2] = { A2, A3 };
 static int current_data[32] = { 0 };
 static int old_data[32] = { 0 };
 
+#define ENGINEERING 1
+
+#ifdef ENGINEERING
+#define CONSOLE_CHAR 'E'
+#endif
+#ifdef WEAPONS
+#define CONSOLE_CHAR 'W'
+#endif
+#ifdef NAVIGATION
+#define CONSOLE_CHAR 'N'
+#endif
+#ifdef COMMS
+#define CONSOLE_CHAR 'C'
+#endif
+#ifdef SCIENCE
+#define CONSOLE_CHAR 'S'
+#endif
+#ifdef DEMON
+#define CONSOLE_CHAR 'D'
+#endif
+
 void setup()
 {
 	int i;
@@ -60,7 +81,7 @@ void read_mux_data(int current_data[])
 
 void transmit_data(int datum, int value)
 {
-	Serial.print("#");
+	Serial.print(CONSOLE_CHAR);
 	Serial.print(datum);
 	Serial.print("=");
 	Serial.println(value);
