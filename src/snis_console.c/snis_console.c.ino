@@ -92,8 +92,10 @@ void transmit_changed_data(int current_data[], int old_data[])
 	int i;
 
 	for (i = 0; i < 32; i++) {
-		if (abs(current_data[i] - old_data[i]) > MUX_SIGNAL_THRESHOLD)
+		if (abs(current_data[i] - old_data[i]) > MUX_SIGNAL_THRESHOLD) {
 			transmit_data(i, current_data[i]);
+			old_data[i] = current_data[i];
+		}
 	}
 }
 
@@ -101,5 +103,4 @@ void loop() {
 
 	read_mux_data(current_data);
 	transmit_changed_data(current_data, old_data);
-	memcpy(old_data, current_data, sizeof(old_data));
 }
