@@ -19,9 +19,11 @@ button_case_size = 6;
 
 module inner_cavity()
 {
-	cube(size = [ depth + 5, innerwidth, innerheight ]);
-	translate(v = [-10, thickness, thickness])
-		cube(size = [ depth + 20, innerwidth - 2 * thickness, innerheight - 2 * thickness ]);
+	union() {
+		cube(size = [ depth + 5, innerwidth, innerheight ]);
+		translate(v = [-10, thickness, thickness])
+			cube(size = [ depth + 20, innerwidth - 2 * thickness, innerheight - 2 * thickness ]);
+	}
 }
 
 module outer_case()
@@ -105,7 +107,7 @@ module button_holder()
 				led_hole(-8, 0);
 				led_hole(8, 0);
 				button_holder_rabbet(-20, 0.5 * outerheight, 50, thickness);
-				button_holder_rabbet(-20, -0.5 * outerheight + thickness, 50, thickness);
+				button_holder_rabbet(-20, -0.5 * outerheight + thickness - clearance, 50, thickness);
 				button_holder_rabbet_vert(-0.5 * outerwidth - clearance, -20, thickness * 2, 50);
 				button_holder_rabbet_vert(0.5 * outerwidth - 2 * thickness + clearance, -20, thickness * 2, 50);
 			}
