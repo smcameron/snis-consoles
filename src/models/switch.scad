@@ -28,7 +28,11 @@ module inner_cavity()
 
 module outer_case()
 {
-	cube(size = [ depth, outerwidth, outerheight ]);
+	union() {
+		cube(size = [ depth, outerwidth, outerheight ]);
+		translate(v = [0, -thickness, -thickness])
+			cube(size = [ thickness, outerwidth + thickness * 2, outerheight + thickness * 2 ]);
+	}
 }
 
 module case()
