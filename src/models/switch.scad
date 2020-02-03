@@ -12,7 +12,7 @@ innerwidth = outerwidth - 2 * thickness;
 innerheight = outerheight - 2 * thickness;
 depth = 20;
 clearance = 0.2;
-buttondepth = 10;
+buttondepth = 8;
 holder_depth = 5;
 holder_floor_thickness = 1.8;
 button_case_size = 6;
@@ -42,11 +42,47 @@ module case()
 	}
 }
 
+module button_pusher()
+{
+	r = 0.5 * (innerheight - 2.5 * clearance);
+	translate(v = [2.0 * r - thickness, 0.5 * (innerwidth), 0.5 * innerheight])
+	rotate(v = [0, 1, 0], a = 90) {
+		difference() {
+			cylinder(r1 = 3.0, r2 = 3.0, h = 2);
+			translate(v = [0, 0, 1.25])
+				cylinder(r1 = 2.0, r2 = 2.0, h = 3);
+		}
+	}
+}
+
+module button_arms()
+{
+	r = 0.5 * (innerheight - 2.5 * clearance);
+	rotate(v = [1, 0, 0], a = 90)
+		translate(v = [r, 0.5 * (innerheight - 2.5 * clearance), 0.5 * (-innerwidth - 2.5 * clearance) - 2.75]) {
+			difference() {
+				cylinder(h = 6, r1 = r, r2 = r);
+				translate(v = [0, 0, -1])
+				cylinder(h = 8, r1 = r - thickness, r2 = r - thickness);
+				translate(v = [-buttondepth - 10, -50, -50])
+					cube(size = [buttondepth + 10, 100, 100]);
+			}
+		}
+}
+
 module button()
 {
 	translate(v = [20, 0, 0]) {
 		rotate(v = [0, 1, 0], a = -90) {
-			cube(size = [buttondepth, innerwidth - 2 * clearance, innerheight - 2 * clearance]);
+			union() {
+				difference() {
+					cube(size = [buttondepth, innerwidth - 2.5 * clearance, innerheight - 2.5 * clearance]);
+					translate(v = [-1, thickness, thickness])
+						cube(size = [buttondepth + 5, innerwidth - 2 * thickness - 2.5 * clearance, innerheight - 2 * thickness - 2.5 * clearance]);
+				}
+				button_arms();
+				button_pusher();
+			}
 		}
 	}
 }
