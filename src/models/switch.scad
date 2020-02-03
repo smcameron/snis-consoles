@@ -135,7 +135,7 @@ module button_holder()
 				cube(size = [holder_floor_thickness * 2, outerwidth, outerheight]);
 				translate(v = [holder_floor_thickness + clearance, 0.5 * (outerwidth - button_case_size - clearance),
 									0.5 * (outerheight - button_case_size - clearance)])
-					cube(size = [holder_floor_thickness, button_case_size + clearance, button_case_size + clearance]);
+					cube(size = [holder_floor_thickness, button_case_size + 1.5 * clearance, button_case_size + 1.5 * clearance]);
 				button_lead_hole(2.25, 3.25);
 				button_lead_hole(-2.25, 3.25);
 				button_lead_hole(2.25, -3.25);
