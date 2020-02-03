@@ -137,9 +137,9 @@ module button_holder()
 		rotate(v = [0, 1, 0], a = -90) {
 			difference() {
 				cube(size = [holder_floor_thickness * 2, outerwidth, outerheight]);
-				translate(v = [holder_floor_thickness + clearance, 0.5 * (outerwidth - button_case_size - clearance),
+				translate(v = [0.5 * holder_floor_thickness + clearance, 0.5 * (outerwidth - button_case_size - clearance),
 									0.5 * (outerheight - button_case_size - clearance)])
-					cube(size = [holder_floor_thickness, button_case_size + 1.5 * clearance, button_case_size + 1.5 * clearance]);
+					cube(size = [holder_floor_thickness * 2, button_case_size + 1.5 * clearance, button_case_size + 1.5 * clearance]);
 				button_lead_hole(2.25, 3.25);
 				button_lead_hole(-2.25, 3.25);
 				button_lead_hole(2.25, -3.25);
