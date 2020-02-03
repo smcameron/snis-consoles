@@ -112,7 +112,7 @@ module button_holder_rabbet(x, y, width, height)
 	translate(v = [holder_floor_thickness * 2 - thickness + clearance, x, y]) {
 		translate(v = [0, outerwidth * 0.5, outerheight * 0.5]) {
 			rotate(v = [0, 1, 0], a = 90)
-				cube(size = [thickness, width, height]);
+				cube(size = [thickness * 2, width, height]);
 		}
 	}
 }
@@ -142,8 +142,8 @@ module button_holder()
 				button_lead_hole(-2.25, -3.25);
 				led_hole(-8, 0);
 				led_hole(8, 0);
-				button_holder_rabbet(-20, 0.5 * outerheight, 50, thickness);
-				button_holder_rabbet(-20, -0.5 * outerheight + thickness - clearance, 50, thickness);
+				button_holder_rabbet(-20, 0.5 * outerheight + thickness - 0.25 * thickness, 50, thickness);
+				button_holder_rabbet(-20, -0.5 * outerheight + 1.25 * thickness - clearance, 50, thickness);
 				button_holder_rabbet_vert(-0.5 * outerwidth - clearance, -20, thickness * 2, 50);
 				button_holder_rabbet_vert(0.5 * outerwidth - 2 * thickness + clearance, -20, thickness * 2, 50);
 			}
