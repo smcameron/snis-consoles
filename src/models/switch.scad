@@ -52,7 +52,8 @@ module button_pusher()
 	translate(v = [2.0 * r - thickness, 0.5 * (innerwidth), 0.5 * innerheight])
 	rotate(v = [0, 1, 0], a = 90) {
 		difference() {
-			cylinder(r1 = 3.0, r2 = 3.0, h = 2);
+			translate(v = [0, 0, 0.4])
+			cylinder(r1 = 3.0, r2 = 3.0, h = 1.0);
 			translate(v = [0, 0, 1.25])
 				cylinder(r1 = 2.0, r2 = 2.0, h = 3);
 		}
