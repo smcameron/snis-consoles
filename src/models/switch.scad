@@ -131,6 +131,11 @@ module button_holder_rabbet_vert(x, y, width, height)
 	}
 }
 
+module friction_arm(x, y)
+{
+	translate(v = [0, x, y])
+		cube(size = [7, 3, 2]);
+}
 
 module button_holder()
 {
@@ -152,6 +157,10 @@ module button_holder()
 				button_holder_rabbet_vert(-0.5 * outerwidth - clearance, -20, thickness * 2, 50);
 				button_holder_rabbet_vert(0.5 * outerwidth - 2 * thickness + clearance, -20, thickness * 2, 50);
 			}
+			friction_arm(1.5 * thickness + clearance, thickness + clearance);
+			friction_arm(outerwidth - (1.5 * thickness + clearance) - 3, thickness + clearance);
+			friction_arm(1.5 * thickness + clearance, outerheight - thickness - clearance - 2.2);
+			friction_arm(outerwidth - (1.5 * thickness + clearance) - 3, outerheight - thickness - clearance - 2.2);
 		}
 	}
 }
