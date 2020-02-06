@@ -1,6 +1,6 @@
 $fn = 64;
 
-/* This is (will be) a 3d printable rough facsimile of a tellite switch that
+/* This is a 3d printable rough facsimile of a tellite switch that
  * can be made with a couple LEDs, some laser cut acrylic, and a cheap
  * tactile momentary switch.
  */
@@ -20,8 +20,8 @@ button_case_size = 6;
 module inner_cavity()
 {
 	union() {
-		cube(size = [ depth + 5, innerwidth, innerheight ]);
-		translate(v = [-10, thickness, thickness])
+		cube(size = [ depth + 6.5, innerwidth + 2 * clearance, innerheight + 2 * clearance ]);
+		translate(v = [-10, thickness + clearance, thickness + clearance])
 			cube(size = [ depth + 20, innerwidth - 2 * thickness, innerheight - 2 * thickness ]);
 	}
 }
@@ -29,7 +29,7 @@ module inner_cavity()
 module outer_case()
 {
 	union() {
-		cube(size = [ depth, outerwidth, outerheight ]);
+		cube(size = [ depth + 1, outerwidth, outerheight ]);
 		translate(v = [0, -thickness, -thickness])
 			cube(size = [ thickness, outerwidth + thickness * 2, outerheight + thickness * 2 ]);
 	}
