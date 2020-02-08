@@ -20,6 +20,38 @@ most well-known and popular thing in its class, and most likely to be something 
 other people will be <em>able</em> to work with.
 
 <hr>
+<b>Sat Feb  8 10:00:38 EST 2020</b>
+<p>Got my aviation style 3d printed switch case thing working pretty well.
+<a href="https://www.thingiverse.com/thing:4148488">Put it on Thingiverse</a>.
+
+<p>The LEDs I'm using have a forward voltage of 3.0 to 3.2V.  Current should be 15-18mA,
+and the power supply will be 12V DC.  So for resistor, I need:
+<pre>
+        R = (Vs - Vf) / If
+          &gt;= (12 - 3.2) / 0.018
+          &lt;= (12 - 3.0) / 0.015
+          = 488.8-600 Ohm
+
+    power = (12 - 3.0) *  0.018
+          = 0.1628W (so, 1/4th watt resistor).
+</pre>
+That's for 1 LED, for 2 LEDs in series:
+<pre>
+        R = (Vs - Vf) / If
+          &gt;= (12 - 3.2 - 3.2) / 0.018
+          &lt;= (12 - 3.0 - 3.0) / 0.015
+          = 311-400 Ohm
+
+    power = (12 - 3.0 - 3.0) * 0.018
+          = 0.108W (so, 1/4th watt resistor).
+</pre>
+So, for single LED, I need some 600 Ohm 1/4W resistors, and for double LEDs in series, 400 Ohm 1/4W resistors.
+
+<p>Testing this out, it might be a little bright, so might need to up the resistor values, or put another
+resistor in series with all the LEDs to drop the voltage down a bit. Experimenting, 5V with two LEDs just
+barelly turns them on, 6V turns them on dimly, then the brightness ramps up as you crank the voltage up to
+12V.  Probably 8 or 9V is about right.
+<hr>
 <b>Sun Feb  2 09:13:43 EST 2020</b>
 <p>It seems that powering the Arduino via the Raspberry Pi's USB is fine, however, there's not a lot
 of current available, so I will need to have another 5v power supply for powering LEDs.
