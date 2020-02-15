@@ -21,6 +21,32 @@ other people will be <em>able</em> to work with.
 
 <hr>
 <b>Sat Feb 15 09:31:09 EST 2020</b>
+<p>Some notes about the shift register:
+<pre>
+
+       ---U---
+   Qb -       - Vcc
+   Qc -       - Qa
+   Qd -       - SER
+   Qe -       - OE
+   Qf -       - RCLK
+   Qg -       - SRCLK
+   Qh -       - SRCLR
+  GND -       - Vcc
+       -------
+
+  Qa-Qh are outputs.
+  OE is Output Enable.  It must be 0v to enable outputs. (tie to ground).
+  SRCLR is Shift Register Clear, which clears the shift register
+        when low.
+  SER is the serial data input.
+  SRCLK is the storage register clock
+  RCLK is the register clock.
+       It appears that I can tie RCLK and SRCLK together for my purposes.
+       Data is shifted in on rising edge.
+  SRCLR clears the shift register if low. I think I can just tie this to high.
+
+</pre>
 <p>Here is a circuit diagram (no guarantees of correctness):
 <p align=center><img src="snis-console-circuit.png">
 <hr>
