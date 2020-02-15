@@ -41,9 +41,9 @@ other people will be <em>able</em> to work with.
         when low.
   SER is the serial data input.
   SRCLK is the storage register clock
-  RCLK is the register clock.
-       It appears that I can tie RCLK and SRCLK together for my purposes.
-       Data is shifted in on rising edge.
+  RCLK is the register clock. I think this is a latch which makes this inputs appear
+       on the outputs.  I *think* you can clock in 8 bits via SER and rising edge of
+       SRCLK, then clock RCLK (rising edge) to have the outputs change all at once.
   SRCLR clears the shift register if low. I think I can just tie this to high.
 
 </pre>
