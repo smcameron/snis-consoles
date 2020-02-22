@@ -114,9 +114,79 @@ void transmit_changed_input(int current_input[], int old_input[])
 	}
 }
 
+struct serial_input_data {
+	int active_command;
+#define NO_COMMAND 0;
+#define LED_STATUS_COMMAND 'L';
+	int index;
+	int value_count;
+	uint8_t led_values[2];
+	uint8_t *value_ptr;
+} sid = { 0 };
+
 void read_indicator_data_from_snis_client(void)
 {
-	/* TODO: Read indicator data from snis_client, if any */
+	/* Sat Feb 22 15:15:14 EST 2020 -- this function is completely untested. */
+
+	int i, inchar, value;
+	uint16_t v;
+
+	if (Serial.available() <= 0)
+		return;
+
+	/* Read a character... */
+	inchar = Serial.read();
+	if (inchar == -1) /* no data */
+		return;
+
+	switch (inchar) {
+	/* LED status values, expect 2 more bytes to indicate status of 16 LEDs */
+	case 'L':
+		sid.value_ptr = &sid.led_values[0];
+		sid.value_count = 2;
+		sid.active_command = LED_STATUS_COMMAND;
+		return;
+	default:
+		/* If no active command, or we already have the data for the active command
+		 * ignore this character and continue.
+		 */
+		if (sid.active_command == 0 || sid.value_count <= 0)
+			return;
+
+		/* Convert value to integer */
+		if (inchar >= '0' && inchar <= '9')
+			value = inchar - '0';
+		else if (inchar >= 'A' && inchar <= 'F')
+			value = inchar - 'A' + 10;
+		else
+			value = -1;
+
+		/* If we did not get a good value, ignore it. */
+		if (value < 0)
+			return;
+		/* We got a good value, store it */
+		*sid.value_ptr = (uint8_t) value;
+		sid.value_ptr++;
+		sid.value_count--;
+		break;
+	}
+
+	/* If we have still more data to read continue reading more.  */
+	if (sid.value_count != 0)
+		return;
+
+	/* We have all the data for the active command, so process it. */
+	switch (sid.active_command) {
+	case 'L': /* Update the indicator LED status values with the data */
+		sid.active_command = NO_COMMAND;
+		memcpy(&v, sid.led_values, sizeof(v));
+		for (i = 0; i < 16; i++)
+			indicator_led[i] = v & (0x1 << i);
+		return;
+	default:
+		/* Unknown command... */
+		return;
+	}
 }
 
 void update_indicator_leds(void)
