@@ -116,10 +116,10 @@ void transmit_changed_input(int current_input[], int old_input[])
 
 struct serial_input_data {
 	int active_command;
-#define NO_COMMAND 0;
-#define LED_STATUS_COMMAND 'L';
+#define NO_COMMAND 0
+#define LED_STATUS_COMMAND 'L'
 	int index;
-	int value_count;
+	int hex_digit_count;
 	uint8_t led_values[2];
 	uint8_t *value_ptr;
 } sid = { 0 };
@@ -141,16 +141,16 @@ void read_indicator_data_from_snis_client(void)
 
 	switch (inchar) {
 	/* LED status values, expect 2 more bytes to indicate status of 16 LEDs */
-	case 'L':
+	case LED_STATUS_COMMAND:
 		sid.value_ptr = &sid.led_values[0];
-		sid.value_count = 2;
+		sid.hex_digit_count = 4; /* 2 bytes with 2 hex digits each */
 		sid.active_command = LED_STATUS_COMMAND;
 		return;
 	default:
 		/* If no active command, or we already have the data for the active command
 		 * ignore this character and continue.
 		 */
-		if (sid.active_command == 0 || sid.value_count <= 0)
+		if (sid.active_command == 0 || sid.hex_digit_count <= 0)
 			return;
 
 		/* Convert value to integer */
@@ -165,19 +165,23 @@ void read_indicator_data_from_snis_client(void)
 		if (value < 0)
 			return;
 		/* We got a good value, store it */
-		*sid.value_ptr = (uint8_t) value;
-		sid.value_ptr++;
-		sid.value_count--;
+		if ((sid.hex_digit_count % 2) == 0)
+			*sid.value_ptr = ((uint8_t) value << 4) & 0xf0; /* high nybble */
+		else
+			*sid.value_ptr |= (uint8_t) value; /* low nybble */
+		if (!(sid.hex_digit_count % 2))
+			sid.value_ptr++;
+		sid.hex_digit_count--;
 		break;
 	}
 
 	/* If we have still more data to read continue reading more.  */
-	if (sid.value_count != 0)
+	if (sid.hex_digit_count != 0)
 		return;
 
 	/* We have all the data for the active command, so process it. */
 	switch (sid.active_command) {
-	case 'L': /* Update the indicator LED status values with the data */
+	case LED_STATUS_COMMAND: /* Update the indicator LED status values with the data */
 		sid.active_command = NO_COMMAND;
 		memcpy(&v, sid.led_values, sizeof(v));
 		for (i = 0; i < 16; i++)
