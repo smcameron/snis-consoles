@@ -94,12 +94,18 @@ void read_mux_input(int current_input[])
 	}
 }
 
+#ifndef TEST_SNIS_CONSOLE
+#define printchar print
+#define printint print
+#define printintln println
+#endif
+
 void transmit_input(int datum, int value)
 {
-	Serial.print(CONSOLE_CHAR);
-	Serial.print(datum);
-	Serial.print("=");
-	Serial.println(value);
+	Serial.printchar(CONSOLE_CHAR);
+	Serial.printint(datum);
+	Serial.printchar('=');
+	Serial.printintln(value);
 }
 
 void transmit_changed_input(int current_input[], int old_input[])
@@ -124,7 +130,20 @@ struct serial_input_data {
 	uint8_t *value_ptr;
 } sid = { 0 };
 
-void read_indicator_data_from_snis_client(void)
+void update_indicator_leds(void)
+{
+	int i;
+
+	for (i = 0; i < 16; i++) { /* Shift out 16 bits of LED indicator data to turn on/off 16 indicator LEDs */
+		digitalWrite(sr_clock, LOW);
+		digitalWrite(sr_data, indicator_led[i] ? HIGH : LOW);
+		digitalWrite(sr_clock, HIGH);
+	}
+	digitalWrite(sr_latch, HIGH); /* Latch the data so it appears on the outputs of the shift registers */
+	digitalWrite(sr_latch, LOW);
+}
+
+void read_indicator_data_from_snis_client_and_update_leds(void)
 {
 	/* Sat Feb 22 15:15:14 EST 2020 -- this function is completely untested. */
 
@@ -168,10 +187,12 @@ void read_indicator_data_from_snis_client(void)
 		if ((sid.hex_digit_count % 2) == 0)
 			*sid.value_ptr = ((uint8_t) value << 4) & 0xf0; /* high nybble */
 		else
-			*sid.value_ptr |= (uint8_t) value; /* low nybble */
-		if (!(sid.hex_digit_count % 2))
+			*sid.value_ptr |= (uint8_t) (value & 0x0f); /* low nybble */
+		if (sid.hex_digit_count % 2)
 			sid.value_ptr++;
 		sid.hex_digit_count--;
+		if (sid.hex_digit_count == 0)
+			update_indicator_leds();
 		break;
 	}
 
@@ -193,23 +214,9 @@ void read_indicator_data_from_snis_client(void)
 	}
 }
 
-void update_indicator_leds(void)
-{
-	int i;
-
-	for (i = 0; i < 16; i++) { /* Shift out 16 bits of LED indicator data to turn on/off 16 indicator LEDs */
-		digitalWrite(sr_clock, LOW);
-		digitalWrite(sr_data, indicator_led[i] ? HIGH : LOW);
-		digitalWrite(sr_clock, HIGH);
-	}
-	digitalWrite(sr_latch, HIGH); /* Latch the data so it appears on the outputs of the shift registers */
-	digitalWrite(sr_latch, LOW);
-}
-
 void loop() {
 
 	read_mux_input(current_input);
 	transmit_changed_input(current_input, old_input);
-	read_indicator_data_from_snis_client();
-	update_indicator_leds();
+	read_indicator_data_from_snis_client_and_update_leds();
 }
