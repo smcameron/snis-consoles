@@ -23,6 +23,24 @@ other people will be <em>able</em> to work with.
 <b>Wed Mar 18 19:28:25 EDT 2020</b>
 <p>Tested out my amplifiers and speakers:
 <p align=center><iframe width="560" height="315" src="https://www.youtube.com/embed/-lZInKAMBQE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p>Got pico2wave working on Raspberry pi.
+
+<p>Needed to:
+<pre>
+	wget -q https://ftp-master.debian.org/keys/release-10.asc -O- | sudo apt-key add -
+	echo "deb http://deb.debian.org/debian buster non-free" | sudo tee -a /etc/apt/sources.list
+	sudo apt-get update
+	sudo apt-get install libttspico-utils
+</pre>
+
+<p>Also needed to install pulseaudio and sox (sox for "play" command).
+<pre>
+	sudo apt-get install pulseaudio
+	sudo apt-get install sox
+</pre>
+
+I think that's it... might have been some more steps though.  Will have to try with additional
+Raspbery Pi's and update these instructions if necessary.
 <hr>
 <b>Tue Mar 17 14:43:16 EDT 2020</b>
 <p>Received 5 pairs of speakers.
