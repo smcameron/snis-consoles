@@ -5,6 +5,13 @@ $fn = 64;
  * tactile momentary switch.
  */
 
+/* By changing rows and cols, you can make gangs of switches. */
+print_case=1;
+print_button=1;
+print_button_holder=1;
+rows=1;
+cols=1;
+
 outerwidth = 23.368;  
 outerheight= 17.018;
 thickness = 1.25;
@@ -165,7 +172,53 @@ module button_holder()
 	}
 }
 
-case();
-button();
-button_holder();
+module print_cases()
+{
+	if (print_case != 0) {
+		for (i = [0 : 1 : rows - 1]) {
+			translate(v = [outerheight * 0.95 * i, 0, 0]) {
+				for (j = [0 : 1 : cols - 1]) {
+					translate(v = [0, outerwidth * 0.95 * j, 0]) {
+						case();
+					}
+				}
+			}
+		}
+	}
+}
+
+module print_buttons()
+{
+	if (print_button != 0) {
+		for (i = [0 : 1 : rows - 1]) {
+			translate(v = [outerheight * i, 0, 0]) {
+				for (j = [0 : 1 : cols - 1]) {
+					translate(v = [0, outerwidth * j, 0]) {
+						button();
+					}
+				}
+			}
+		}
+	}
+}
+
+module print_button_holders()
+{
+	if (print_button_holder != 0) {
+		for (i = [0 : 1 : rows - 1]) {
+			translate(v = [outerheight * 1.1 * i, 0, 0]) {
+				for (j = [0 : 1 : cols - 1]) {
+					translate(v = [0, outerwidth * 1.1 * j, 0]) {
+						button_holder();
+					}
+				}
+			}
+		}
+	}
+}
+
+
+print_cases();
+print_buttons();
+print_button_holders();
 
