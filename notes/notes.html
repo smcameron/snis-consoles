@@ -20,6 +20,19 @@ most well-known and popular thing in its class, and most likely to be something 
 other people will be <em>able</em> to work with.
 
 <hr>
+<b>Thu 08 Jun 2023 07:55:53 AM EDT</b>
+<p>Implemented
+<a href="https://github.com/smcameron/space-nerds-in-space/discussions/334">an
+idea by Shadow8472</a>, which is to allow running snis_client with no textures
+(actually with 1 bogus textures).  Many of the stations (Navigation, Engineering
+Damage Control, Science, and COMMs) do not use any textures. For phyiscal consoles
+which are meant to be used with a single station, it doesn't make sense to load
+all these textures only to not use any of them.  So I added a "--no-textures"
+option to snis_client and an item in the "Options" menu of snis_launcher to
+enable it.  Briefly observing the resident memory usage of snis_client with htop
+showed it using about 700M with textures and about 300M without, saving 400M,
+over half the memory used.
+<hr>
 <b>Wed Mar 18 19:28:25 EDT 2020</b>
 <p>Tested out my amplifiers and speakers:
 <p align=center><iframe width="560" height="315" src="https://www.youtube.com/embed/-lZInKAMBQE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
