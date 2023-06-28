@@ -8,9 +8,11 @@
   plywood into which the insert may be fitted, but is is difficult
   (impossible) to cut the tiny holes needed for each individual fader
   in such plywood, and anyway the plywood is too thick.
-*/
 
-$fn=30;
+  To use this file, set the following variables (in mm) and then
+  include this file.
+
+  These are intentionally commented out here.
 
 plate_thickness = 3;
 countersink = 0.01;
@@ -34,6 +36,10 @@ web_edge_offset = screw_edge_offset + screw_radius;
 web_screw_offset = 2 * web_edge_offset;
 web_horiz_len = plate_width - 2 * web_screw_offset;
 web_vert_len = plate_height - 2 * web_screw_offset;
+
+*/
+
+$fn=30;
 
 module undrilled_plate()
 {
