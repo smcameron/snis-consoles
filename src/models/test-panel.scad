@@ -19,12 +19,13 @@ module panel_holes()
 
 module panel_outline()
 {
-	translate(v = [0, 0, 0])
 	square(size = [220, 150], center = true);
 }
 
-translate(v = [100, 100, 0]) {
-	panel_holes();
-	/* panel_outline(); */
+translate(v = [150, 100, 0]) {
+	difference() {
+		panel_outline();
+		panel_holes();
+	}
 }
 
