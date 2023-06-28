@@ -6,3 +6,6 @@ clean:
 %.stl:	%.scad
 	openscad -o $@ $<
 
+%.dxf:	%.scad
+	openscad -o $@ $<
+
