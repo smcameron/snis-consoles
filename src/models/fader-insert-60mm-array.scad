@@ -8,9 +8,10 @@
   plywood into which the insert may be fitted, but is is difficult
   (impossible) to cut the tiny holes needed for each individual fader
   in such plywood, and anyway the plywood is too thick.
-*/
 
-$fn=30;
+Define the following variables, then include this file and call
+
+	fader_60mm_array_insert(0, 0, fader_spacing, fader_count);
 
 plate_thickness = 3;
 countersink = 0.01;
@@ -20,6 +21,10 @@ web_thickness = 3;
 web_height = 10;
 tang_hole_width = 2;
 plate_height = 110;
+
+*/
+
+$fn=30;
 
 module fader_screw_hole(x, y, screw_radius, head_radius, hole_depth, countersink_depth)
 {
