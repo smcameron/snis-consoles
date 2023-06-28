@@ -20,8 +20,6 @@ pot_horizontal_spacing = 25;
 pot_vertical_spacing = 30;
 pot_cols = 4;
 pot_rows = 5;
-web_thickness = 3;
-web_height = 10;
 hole_radius = 3.5;
 plate_horizontal_border = 15;
 plate_vertical_border = 15;
@@ -30,7 +28,7 @@ plate_width =  pot_cols * pot_horizontal_spacing + 2 * plate_horizontal_border;
 screw_radius = 0.5 * 3; 
 screw_edge_offset = 5;
 
-web_thickness = 4;
+web_thickness = 3;
 web_height = 8;
 web_edge_offset = screw_edge_offset + screw_radius;
 web_screw_offset = 2 * web_edge_offset;
@@ -43,7 +41,6 @@ $fn=30;
 
 module undrilled_plate()
 {
-	echo(plate_width, " x ", plate_height, " x ", plate_thickness);
 	cube(size = [plate_width, plate_height, plate_thickness]);
 }
 
