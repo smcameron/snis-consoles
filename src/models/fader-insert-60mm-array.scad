@@ -21,6 +21,7 @@ web_thickness = 3;
 web_height = 10;
 tang_hole_width = 2;
 plate_height = 110;
+fader_screw_holes = 1;
 
 */
 
@@ -47,9 +48,11 @@ module fader_tang_hole(width, length, depth)
 
 module fader_60mm_holes(x, y)
 {
-	translate(v = [0, 0, plate_thickness]) {
-		fader_screw_hole(x, y + 39.5, 0.5 * 3, 0.5 * 5, plate_thickness + 2, countersink);
-		fader_screw_hole(x, y - 39.5, 0.5 * 3, 0.5 * 5, plate_thickness + 2, countersink);
+	if (fader_screw_holes > 0)  {
+		translate(v = [0, 0, plate_thickness]) {
+			fader_screw_hole(x, y + 39.5, 0.5 * 3, 0.5 * 5, plate_thickness + 2, countersink);
+			fader_screw_hole(x, y - 39.5, 0.5 * 3, 0.5 * 5, plate_thickness + 2, countersink);
+		}
 	}
 	translate(v = [0, 0, plate_thickness + 1]) {
 		translate(v = [x, y, 0])

@@ -10,6 +10,7 @@ web_thickness = 3;
 web_height = 10;
 tang_hole_width = 2;
 plate_height = 110;
+fader_screw_holes = 0; /* no fader holes */
 
 include <fader-insert-60mm-array.scad>
 
