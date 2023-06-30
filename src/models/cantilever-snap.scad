@@ -65,5 +65,5 @@ module fader_snap_arms()
 				tapered_cantilever_snap_arm(8, 11, 1.2, 6, 10, 15);
 }
 
-fader_snap_arms();
+/* fader_snap_arms(); */
 

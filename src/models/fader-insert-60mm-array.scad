@@ -22,8 +22,12 @@ web_height = 10;
 tang_hole_width = 2;
 plate_height = 110;
 fader_screw_holes = 1;
+use_fader_snap_arms = 1;
+fader_phys_len = 88;
 
 */
+
+include <cantilever-snap.scad>
 
 $fn=30;
 
@@ -60,6 +64,18 @@ module fader_60mm_holes(x, y)
 	}
 }
 
+module fader_60mm_snap_arm_array(x, y, spacing, count)
+{
+	if (use_fader_snap_arms > 0) {
+		for (i = [0 : 1 : count - 1]) {
+			translate(v = [x + i * spacing + spacing, y - 0.5 * fader_phys_length, 0])
+				rotate(v = [0, 0, 1], a = 90)
+					rotate(v = [1, 0, 0], a = 180)
+						fader_snap_arms();
+		}
+	}
+}
+
 
 module fader_60mm_hole_array(x, y, spacing, count)
 {
@@ -84,6 +100,7 @@ module fader_60mm_array_insert(x, y, spacing, count)
 				fader_screw_hole((count + 1) * spacing - 4, plate_height / 2 - 4, 0.5 * 3, 0.5 * 5, plate_thickness + 2, countersink);
 			}
 		}
+		fader_60mm_snap_arm_array(x, y, spacing, count);
 		translate(v = [0.5 * spacing * (count + 1), plate_height / 2 - 4, -plate_thickness]) 
 			cube(size = [spacing * count, web_thickness, web_height], center = true);
 		translate(v = [0.5 * spacing * (count + 1), -plate_height / 2 + 4, -plate_thickness]) 
