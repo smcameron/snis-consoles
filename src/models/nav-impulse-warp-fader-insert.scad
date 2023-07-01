@@ -13,6 +13,7 @@ plate_height = 110;
 fader_screw_holes = 0; /* no fader holes */
 use_fader_snap_arms = 1;
 fader_phys_length = 88;
+fader_snap_arm_count = 4;
 
 include <fader-insert-60mm-array.scad>
 

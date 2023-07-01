@@ -24,6 +24,7 @@ plate_height = 110;
 fader_screw_holes = 1;
 use_fader_snap_arms = 1;
 fader_phys_len = 88;
+fader_snap_arm_count = 4;
 
 */
 
@@ -71,7 +72,7 @@ module fader_60mm_snap_arm_array(x, y, spacing, count)
 			translate(v = [x + i * spacing + spacing, y - 0.5 * fader_phys_length, 0])
 				rotate(v = [0, 0, 1], a = 90)
 					rotate(v = [1, 0, 0], a = 180)
-						fader_snap_arms();
+						fader_snap_arms(fader_snap_arm_count);
 		}
 	}
 }

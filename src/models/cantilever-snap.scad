@@ -41,7 +41,7 @@ module tapered_cantilever_snap_arm(ih, oh, w, back_angle, d, taper_angle)
 
 /* tapered_cantilever_snap_arm(8, 11, 1.2, 6, 10, 15); */
 
-module fader_snap_arms()
+module fader_snap_arms(count)
 {
 	translate(v = [0, -5, 0]) 
 		tapered_cantilever_snap_arm(8, 11, 1.2, 6, 10, 15);
@@ -49,23 +49,18 @@ module fader_snap_arms()
 			rotate(v = [0, 0, 1], a = 180)
 				translate(v = [0, -5, 0]) 
 					tapered_cantilever_snap_arm(8, 11, 1.2, 6, 10, 15);
-	translate(v = [88/3, -6, 0])
-		rotate(v = [0, 0, 1], 90)
-			translate(v = [0, -5, 0]) 
-				tapered_cantilever_snap_arm(8, 11, 1.2, 6, 10, 15);
-	translate(v = [2 * 88/3, -6, 0])
-		rotate(v = [0, 0, 1], 90)
-			translate(v = [0, -5, 0]) 
-				tapered_cantilever_snap_arm(8, 11, 1.2, 6, 10, 15);
-	translate(v = [88/3, 6, 0])
-		rotate(v = [0, 0, 1], -90)
-			translate(v = [0, -5, 0]) 
-				tapered_cantilever_snap_arm(8, 11, 1.2, 6, 10, 15);
-	translate(v = [2 * 88/3, 6, 0])
-		rotate(v = [0, 0, 1], -90)
-			translate(v = [0, -5, 0]) 
-				tapered_cantilever_snap_arm(8, 11, 1.2, 6, 10, 15);
+
+	for (i = [1 : 1 : count]) {
+		translate(v = [i * 88/(count + 1), -6, 0])
+			rotate(v = [0, 0, 1], 90)
+				translate(v = [0, -5, 0]) 
+					tapered_cantilever_snap_arm(8, 11, 1.2, 6, 10, 15);
+		translate(v = [i * 88/(count + 1), 6, 0])
+			rotate(v = [0, 0, 1], -90)
+				translate(v = [0, -5, 0]) 
+					tapered_cantilever_snap_arm(8, 11, 1.2, 6, 10, 15);
+	}
 }
 
-/* fader_snap_arms(); */
+/* fader_snap_arms(3); */
 

@@ -1,7 +1,7 @@
 
 include <cantilever-snap.scad>
 
-fader_snap_arms();
+fader_snap_arms(4);
 
 difference() {
 	translate(v = [-3, -10, -3.5])
