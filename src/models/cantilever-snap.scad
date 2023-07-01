@@ -1,9 +1,11 @@
 
 /* make a cantilever snap arm.  This is not super robust */
+
+fader_snap_arm_fit_tolerance = 0.1;
  
 module cantilever_snap_arm(ih, oh, w, back_angle, d)
 {
-	translate(v = [-w, 0, 0])
+	translate(v = [-w - fader_snap_arm_fit_tolerance, 0, 0])
 	union() {
 		cube(size = [w, d, oh]);
 		translate(v = [0, 0, oh])
