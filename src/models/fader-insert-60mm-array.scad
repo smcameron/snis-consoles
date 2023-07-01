@@ -87,30 +87,42 @@ module fader_60mm_hole_array(x, y, spacing, count)
 
 module fader_60mm_array_insert(x, y, spacing, count)
 {
-	translate(v = [0, 0, plate_thickness]) 
-	rotate(v = [1, 0, 0], a = 180)
+	translate(v = [0, 0, plate_thickness]) {
+	rotate(v = [1, 0, 0], a = 180) {
 	union() {
 		difference() {
 			translate(v = [x, y - plate_height / 2, 0])
 				cube(size = [(count + 1) * spacing, plate_height, plate_thickness]);
 			fader_60mm_hole_array(x + spacing, y, spacing, count);
+			if (1 == 0) {
 			translate(v = [0, 0, plate_thickness]) {
 				fader_screw_hole(4, -plate_height / 2 + 4, 0.5 * 3, 0.5 * 5, plate_thickness + 2, countersink);
 				fader_screw_hole(4, plate_height / 2 - 4, 0.5 * 3, 0.5 * 5, plate_thickness + 2, countersink);
 				fader_screw_hole((count + 1) * spacing - 4, -plate_height / 2 + 4, 0.5 * 3, 0.5 * 5, plate_thickness + 2, countersink);
 				fader_screw_hole((count + 1) * spacing - 4, plate_height / 2 - 4, 0.5 * 3, 0.5 * 5, plate_thickness + 2, countersink);
 			}
+			}
 		}
 		fader_60mm_snap_arm_array(x, y, spacing, count);
-		translate(v = [0.5 * spacing * (count + 1), plate_height / 2 - 4, -plate_thickness]) 
+/*
+		translate(v = [0.5 * spacing * (count + 1), plate_height / 2 - 4, -plate_thickness])
 			cube(size = [spacing * count, web_thickness, web_height], center = true);
-		translate(v = [0.5 * spacing * (count + 1), -plate_height / 2 + 4, -plate_thickness]) 
+		translate(v = [0.5 * spacing * (count + 1), -plate_height / 2 + 4, -plate_thickness])
 			cube(size = [spacing * count, web_thickness, web_height], center = true);
-		translate(v = [5, 0, -plate_thickness]) 
+		translate(v = [5, 0, -plate_thickness])
 			cube(size = [web_thickness, 0.8 * plate_height, web_height], center = true);
-		translate(v = [(count + 1) * spacing - 5, 0, -plate_thickness]) 
+		translate(v = [(count + 1) * spacing - 5, 0, -plate_thickness])
 			cube(size = [web_thickness, 0.8 * plate_height, web_height], center = true);
+*/
 	}
+	}
+	}
+	/* translate(v = [0.5 * spacing * (count + 1), -plate_height / 2 - 4, -plate_thickness])  */
+	translate(v = [0, 0.5 * spacing * (count + 1) - 3 * plate_thickness, plate_thickness])
+		tapered_snap_arm_row(3, 6.6, 1.2, 7, 10, 15, 4, plate_height);
+	translate(v = [spacing * (count + 1), - 0.5 * spacing * (count + 1) + 3 * plate_thickness, plate_thickness])
+		rotate(v = [0, 0, 1], a = 180)
+			tapered_snap_arm_row(3, 6.6, 1.2, 7, 10, 15, 4, plate_height);
 }
 
 fader_60mm_array_insert(0, 0, fader_spacing, fader_count);
