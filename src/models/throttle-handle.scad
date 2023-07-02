@@ -16,7 +16,7 @@ module horizontal_crossbar(r)
 module tang_hole()
 {
 	translate(v = [0, 0, 16])
-		cube(size = [1.1, 4.1, 10.5], center = true);
+		cube(size = [1.35, 4.35, 10.5], center = true);
 }
 
 module shaft()
