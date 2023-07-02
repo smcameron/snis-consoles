@@ -23,14 +23,61 @@ tang_hole_width = 2;
 plate_height = 110;
 fader_screw_holes = 1;
 use_fader_snap_arms = 1;
-fader_phys_len = 88;
+fader_phys_length = 88;
+fader_phys_width = 12;
 fader_snap_arm_count = 4;
+side_margin = 15;
 
 */
 
+plate_width = (fader_count - 1) * fader_spacing + 2 * side_margin;
+
 include <cantilever-snap.scad>
 
-$fn=30;
+module fader_snap_arm()
+{
+	snap_arm(11);
+}
+
+module panel_snap_arm()
+{
+	scale(v = [1.0, 0.6, 0.5])
+		snap_arm(2.0 * 6.6);
+}
+
+module fader_snap_arms(fader_phys_length, fader_phys_width, count)
+{
+	fader_snap_arm();
+	translate(v = [fader_phys_length, 0, 0])
+			rotate(v = [0, 0, 1], a = 180)
+				fader_snap_arm();
+
+	for (i = [1 : 1 : count]) {
+		translate(v = [i * fader_phys_length/(count + 1), -0.5 * fader_phys_width, 0])
+			rotate(v = [0, 0, 1], 90)
+				fader_snap_arm();
+		translate(v = [i * fader_phys_length/(count + 1), 0.5 * fader_phys_width, 0])
+			rotate(v = [0, 0, 1], -90)
+				fader_snap_arm();
+	}
+}
+
+module panel_snap_arms()
+{
+	translate(v = [plate_thickness + 0.95 * plate_width, -0.5 * plate_height, 0])
+	for (i = [0 : 1 : 3]) {
+		translate(v = [0, (i + 1) * 0.20 * plate_height, 0])
+			panel_snap_arm();
+	}
+	translate(v = [-plate_thickness + 0.05 * plate_width, 0.5 * plate_height, 0])
+	rotate(v = [0, 0, 1], a = 180)
+	for (i = [0 : 1 : 3]) {
+		translate(v = [0, (i + 1) * 0.20 * plate_height, 0])
+			panel_snap_arm();
+	}
+}
+
+$fn=100;
 
 module fader_screw_hole(x, y, screw_radius, head_radius, hole_depth, countersink_depth)
 {
@@ -69,10 +116,10 @@ module fader_60mm_snap_arm_array(x, y, spacing, count)
 {
 	if (use_fader_snap_arms > 0) {
 		for (i = [0 : 1 : count - 1]) {
-			translate(v = [x + i * spacing + spacing, y - 0.5 * fader_phys_length, 0])
+			translate(v = [x + i * spacing, y - 0.5 * fader_phys_length, 0])
 				rotate(v = [0, 0, 1], a = 90)
 					rotate(v = [1, 0, 0], a = 180)
-						fader_snap_arms(fader_snap_arm_count);
+						fader_snap_arms(fader_phys_length, fader_phys_width, fader_snap_arm_count);
 		}
 	}
 }
@@ -85,6 +132,42 @@ module fader_60mm_hole_array(x, y, spacing, count)
 	}
 }
 
+module hemisphere(r)
+{
+	difference() {
+		sphere(r);
+		translate(v = [0, 0, -r])
+			cube(size = [2 * r, 2 * r, 2 * r], center = true);
+	}
+}
+
+module truncated_hemisphere(thickness)
+{
+	r = 2 * thickness;
+	difference() {
+		sphere(r);
+		translate(v = [0, 0, -r])
+			cube(size = [2 * r, 2 * r, 2 * r], center = true);
+		translate(v = [0, 0, 3 * thickness])
+			cube(size = [2 * r, 2 * r, 2 * r], center = true);
+	}
+}
+
+module face_plate(width, height, thickness)
+{
+	r = thickness;
+	hull() {
+		translate(v = [r, 0, 0])
+			truncated_hemisphere(r);
+		translate(v = [width - r, r, 0])
+			truncated_hemisphere(r);
+		translate(v = [width - r, height - r, 0])
+			truncated_hemisphere(r);
+		translate(v = [r, height - r, 0])
+			truncated_hemisphere(r);
+	}
+}
+
 module fader_60mm_array_insert(x, y, spacing, count)
 {
 	translate(v = [0, 0, plate_thickness]) {
@@ -92,8 +175,9 @@ module fader_60mm_array_insert(x, y, spacing, count)
 	union() {
 		difference() {
 			translate(v = [x, y - plate_height / 2, 0])
-				cube(size = [(count + 1) * spacing, plate_height, plate_thickness]);
-			fader_60mm_hole_array(x + spacing, y, spacing, count);
+				/* cube(size = [plate_width, plate_height, plate_thickness]); */
+				face_plate(plate_width, plate_height, plate_thickness);
+			fader_60mm_hole_array(x + side_margin, y, spacing, count);
 			if (1 == 0) {
 			translate(v = [0, 0, plate_thickness]) {
 				fader_screw_hole(4, -plate_height / 2 + 4, 0.5 * 3, 0.5 * 5, plate_thickness + 2, countersink);
@@ -103,26 +187,15 @@ module fader_60mm_array_insert(x, y, spacing, count)
 			}
 			}
 		}
-		fader_60mm_snap_arm_array(x, y, spacing, count);
-/*
-		translate(v = [0.5 * spacing * (count + 1), plate_height / 2 - 4, -plate_thickness])
-			cube(size = [spacing * count, web_thickness, web_height], center = true);
-		translate(v = [0.5 * spacing * (count + 1), -plate_height / 2 + 4, -plate_thickness])
-			cube(size = [spacing * count, web_thickness, web_height], center = true);
-		translate(v = [5, 0, -plate_thickness])
-			cube(size = [web_thickness, 0.8 * plate_height, web_height], center = true);
-		translate(v = [(count + 1) * spacing - 5, 0, -plate_thickness])
-			cube(size = [web_thickness, 0.8 * plate_height, web_height], center = true);
-*/
+		fader_60mm_snap_arm_array(x + side_margin, y, spacing, count);
+		translate(v = [0.5 * plate_width, 0.45 * plate_height, -0.5 * web_height])
+			cube(size = [0.95 * plate_width, web_thickness, web_height], center = true);
+		translate(v = [0.5 * plate_width, -0.45 * plate_height, -0.5 * web_height])
+			cube(size = [0.95 * plate_width, web_thickness, web_height], center = true);
 	}
 	}
+		panel_snap_arms();
 	}
-	/* translate(v = [0.5 * spacing * (count + 1), -plate_height / 2 - 4, -plate_thickness])  */
-	translate(v = [0, 0.5 * spacing * (count + 1) - 3 * plate_thickness, plate_thickness])
-		tapered_snap_arm_row(3, 6.6, 1.2, 7, 10, 15, 4, plate_height);
-	translate(v = [spacing * (count + 1), - 0.5 * spacing * (count + 1) + 3 * plate_thickness, plate_thickness])
-		rotate(v = [0, 0, 1], a = 180)
-			tapered_snap_arm_row(3, 6.6, 1.2, 7, 10, 15, 4, plate_height);
 }
 
 fader_60mm_array_insert(0, 0, fader_spacing, fader_count);

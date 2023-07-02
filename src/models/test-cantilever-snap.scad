@@ -1,9 +1,14 @@
 
 include <cantilever-snap.scad>
 
-tapered_cantilever_snap_arm(8, 11, 1.2, 6, 10, 15);
-translate(v = [0, 50, 0])
-	fader_snap_arms(3);
-translate(v = [0, -50, 0])
-	tapered_snap_arm_row(3, 6.6, 1.2, 7, 10, 15, 6, 100);
+translate(v = [0, -75, 0])
+	cantilever_snap_head(10, 10);
 
+translate(v= [0, -100, 0])
+	cantilever_snap_arm_base(10, 20, 40);
+
+translate(v= [0, -150, 0])
+	tapered_cantilever_snap_arm_base(10, 20, 40);
+
+translate(v= [0, -200, 0])
+	snap_arm(100);

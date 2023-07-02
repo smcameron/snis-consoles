@@ -12,8 +12,10 @@ tang_hole_width = 2;
 plate_height = 110;
 fader_screw_holes = 0; /* no fader holes */
 use_fader_snap_arms = 1;
-fader_phys_length = 88;
+fader_phys_length = 88.5; /* extra half millimeter for tolerance */
+fader_phys_width = 12.5;
 fader_snap_arm_count = 4;
+side_margin = 0.5 * fader_spacing;
 
 include <fader-insert-60mm-array.scad>
 
