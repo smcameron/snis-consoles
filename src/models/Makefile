@@ -1,7 +1,8 @@
 all: switch.stl \
 	nav-5x1-toggle-switch-insert.stl \
 	nav-impulse-warp-fader-insert.stl \
-	nav-zoom-pot-insert.stl
+	nav-zoom-pot-insert.stl \
+	throttle-handle.stl
 
 clean:
 	/bin/rm -f *.stl
@@ -11,6 +12,8 @@ clean:
 
 %.dxf:	%.scad
 	openscad -o $@ $<
+
+throttle-handle.stl:	throttle-handle.scad
 
 nav-5x1-toggle-switch-insert.stl:	nav-5x1-toggle-switch-insert.scad \
 	potentiometer-insert.scad
