@@ -23,6 +23,6 @@ nav-zoom-pot-insert.stl:	nav-zoom-pot-insert.scad potentiometer-insert.scad
 	openscad -o $@ $<
 
 nav-impulse-warp-fader-insert.stl:	nav-impulse-warp-fader-insert.scad \
-	fader-insert-60mm-array.scad
+	fader-insert-60mm-array.scad face-plate.scad
 	openscad -o $@ $<
 
