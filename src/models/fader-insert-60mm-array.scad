@@ -148,9 +148,9 @@ module fader_60mm_array_insert(x, y, spacing, count)
 	rotate(v = [1, 0, 0], a = 180) {
 	union() {
 		difference() {
-			translate(v = [x, y - plate_height / 2, 0])
-				/* cube(size = [plate_width, plate_height, plate_thickness]); */
-				face_plate(plate_width, plate_height, plate_thickness);
+			rotate(v = [1, 0, 0], a = 180)
+				translate(v = [x, y - plate_height / 2, -plate_thickness])
+					face_plate(plate_width, plate_height, plate_thickness);
 			fader_60mm_hole_array(x + side_margin, y, spacing, count);
 			if (1 == 0) {
 			translate(v = [0, 0, plate_thickness]) {
