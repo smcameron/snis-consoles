@@ -26,16 +26,28 @@ module shaft()
 			translate(v = [0, 0, 5])
 				cylinder(r1 = 2, r2 = 2, h = 10);
 			translate(v = [0, 0, 20])
-				scale(v = [1.0, 1.5, 1.0])
+				scale(v = [1.2, 1.5, 1.2])
 					cylinder(r1 = 3, r2 = 3, h = 1);
 		}
-		tang_hole();
 	}
 }
 
+module shaft_extension()
+{
+	translate(v = [0, 0, 20.5])
+	difference() {
+		cylinder(r1 = 4, r2 = 5, h = 7.5);
+		translate(v = [0, 0, -1])
+			cylinder(r1 = 3.5, r2 = 3.5, h = 10);
+	}
+}
 
+difference() {
 union() {
 	horizontal_crossbar(5);
 	shaft();
+	shaft_extension();
+}
+tang_hole();
 }
 
