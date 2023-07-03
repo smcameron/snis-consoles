@@ -19,7 +19,7 @@ nav-5x1-toggle-switch-insert.stl:	nav-5x1-toggle-switch-insert.scad \
 	potentiometer-insert.scad
 	openscad -o $@ $<
 
-nav-zoom-pot-insert.stl:	nav-zoom-pot-insert.scad potentiometer-insert.scad
+nav-zoom-pot-insert.stl:	nav-zoom-pot-insert.scad potentiometer-insert.scad face-plate.scad
 	openscad -o $@ $<
 
 nav-impulse-warp-fader-insert.stl:	nav-impulse-warp-fader-insert.scad \

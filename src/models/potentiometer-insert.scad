@@ -37,11 +37,13 @@ web_vert_len = plate_height - 2 * web_screw_offset;
 
 */
 
+include <face-plate.scad>
+
 $fn=30;
 
 module undrilled_plate()
 {
-	cube(size = [plate_width, plate_height, plate_thickness]);
+	face_plate(plate_width, plate_height, plate_thickness);
 }
 
 module drill_hole(x, y, r)
