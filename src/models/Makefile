@@ -2,7 +2,8 @@ all: switch.stl \
 	nav-5x1-toggle-switch-insert.stl \
 	nav-impulse-warp-fader-insert.stl \
 	nav-zoom-pot-insert.stl \
-	throttle-handle.stl
+	throttle-handle.stl \
+	large-switch.stl
 
 clean:
 	/bin/rm -f *.stl
@@ -24,5 +25,8 @@ nav-zoom-pot-insert.stl:	nav-zoom-pot-insert.scad potentiometer-insert.scad face
 
 nav-impulse-warp-fader-insert.stl:	nav-impulse-warp-fader-insert.scad \
 	fader-insert-60mm-array.scad face-plate.scad
+	openscad -o $@ $<
+
+large-switch.stl:	large-switch.scad
 	openscad -o $@ $<
 
