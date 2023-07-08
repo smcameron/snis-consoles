@@ -3,8 +3,11 @@ include <face-plate.scad>
 
 $fn = 50;
 
+/* Set rows and cols before including this file */
+/*
 rows = 2;
 cols = 2;
+*/
 
 clearance = 0.5;
 width = 33 + clearance;

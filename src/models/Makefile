@@ -3,7 +3,9 @@ all: switch.stl \
 	nav-impulse-warp-fader-insert.stl \
 	nav-zoom-pot-insert.stl \
 	throttle-handle.stl \
-	large-switch.stl
+	large-switch.stl \
+	nav-5x4-large-switch-array-holder.stl \
+	nav-5x1-large-switch-array-holder.stl
 
 clean:
 	/bin/rm -f *.stl
@@ -28,5 +30,13 @@ nav-impulse-warp-fader-insert.stl:	nav-impulse-warp-fader-insert.scad \
 	openscad -o $@ $<
 
 large-switch.stl:	large-switch.scad
+	openscad -o $@ $<
+
+nav-5x4-large-switch-array-holder.stl:	nav-5x4-large-switch-array-holder.scad \
+	large-switch-array-holder.scad face-plate.scad
+	openscad -o $@ $<
+
+nav-5x1-large-switch-array-holder.stl:	nav-5x1-large-switch-array-holder.scad \
+	large-switch-array-holder.scad face-plate.scad
 	openscad -o $@ $<
 
