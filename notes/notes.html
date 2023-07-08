@@ -20,6 +20,45 @@ most well-known and popular thing in its class, and most likely to be something 
 other people will be <em>able</em> to work with.
 
 <hr>
+<b>Sat 08 Jul 2023 10:36:44 AM EDT</b>
+Up to recently, I had been planning to use serial port over USB to communicate between the computer
+(e.g. Raspberry Pi 4) and the Arduino, mainly because doing that is easy.  However, this makes the
+host computer side more complicated.  I need a little program that reads input from the serial port,
+sends messages to turn on LEDs, and communicates with snis_client via a unix domain socket.  Doable,
+but maybe more of a pain in the ass than is strictly necessary.
+
+<p>What if the whole thing shows up as a USB game controller?  I already have support in snis_client
+for customizable game controller setups, so if possible, that seems like a win.
+
+<p>I do have some concerns though.  Game controllers
+have "buttons" and "axes".  The send "button up" and "button down" events to the host, and axis
+movement events (e.g. digitized potentiometer voltage readings).  However, a toggle switch isn't
+so easily modelled.  Maybe a "button down + button up" event for "on", and a "button up" event
+for off could work?  And what about controlling LEDs?  Not sure how that is done.
+If these can be solved, then a USB game controller would require much less work on the software
+end of things, I think.  Also, I was thinking about making some dial gauges with servos or
+stepper motors, and those would need to be controlled somehow. I don't think game controllers
+have any such capabilities.
+
+<p>Hmm, SDL2 has:
+
+<blockquote>
+<pre>
+int SDL_GameControllerSetLED(SDL_GameController *gamecontroller, Uint8 red, Uint8 green, Uint8 blue);
+
+gamecontroller    The controller to update
+           red    The intensity of the red LED
+         green    The intensity of the green LED
+          blue    The intensity of the blue LED
+</pre>
+</blockquote>
+
+<p>So... gamecontrollers only have one LED, and it's an RGB LED and all you can do is set the color?
+That's not really going to work.
+
+<p>Some GPL'ed software for ATMega here: https://www.raphnet.net/electronique/usb_game12/index_en.php#2
+
+<hr>
 <b>Fri 07 Jul 2023 07:27:53 AM EDT</b>
 Found this page: <a href="https://realsimcontrol.com/io_mux.html">https://realsimcontrol.com/io_mux.html</a>
 which has some good ideas.
