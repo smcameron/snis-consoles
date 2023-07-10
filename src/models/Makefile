@@ -4,8 +4,8 @@ all: switch.stl \
 	nav-zoom-pot-insert.stl \
 	throttle-handle.stl \
 	large-switch.stl \
-	nav-5x4-large-switch-array-holder.stl \
-	nav-5x1-large-switch-array-holder.stl
+	nav-5x1-large-switch-array-holder.stl \
+	nav-2x5-large-switch-array-holder.stl
 
 clean:
 	/bin/rm -f *.stl
@@ -37,6 +37,10 @@ nav-5x4-large-switch-array-holder.stl:	nav-5x4-large-switch-array-holder.scad \
 	openscad -o $@ $<
 
 nav-5x1-large-switch-array-holder.stl:	nav-5x1-large-switch-array-holder.scad \
+	large-switch-array-holder.scad face-plate.scad
+	openscad -o $@ $<
+
+nav-2x5-large-switch-array-holder.stl:	nav-2x5-large-switch-array-holder.scad \
 	large-switch-array-holder.scad face-plate.scad
 	openscad -o $@ $<
 
