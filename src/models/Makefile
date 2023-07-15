@@ -5,7 +5,8 @@ all: switch.stl \
 	throttle-handle.stl \
 	large-switch.stl \
 	nav-5x1-large-switch-array-holder.stl \
-	nav-2x5-large-switch-array-holder.stl
+	nav-2x5-large-switch-array-holder.stl \
+	case_siding.dxf
 
 clean:
 	/bin/rm -f *.stl
@@ -43,4 +44,8 @@ nav-5x1-large-switch-array-holder.stl:	nav-5x1-large-switch-array-holder.scad \
 nav-2x5-large-switch-array-holder.stl:	nav-2x5-large-switch-array-holder.scad \
 	large-switch-array-holder.scad face-plate.scad
 	openscad -o $@ $<
+
+case_siding.dxf:	case_siding.scad
+	openscad -o $@ $<
+
 
