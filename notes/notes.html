@@ -20,6 +20,44 @@ most well-known and popular thing in its class, and most likely to be something 
 other people will be <em>able</em> to work with.
 
 <hr>
+<b>Sat 15 Jul 2023 11:16:39 AM EDT</b>
+<p>I have been thinking about the wiring and connectors between the buttons and the
+circuit board brain of this contraption.  Been playing around with crimping DuPont
+connectors, and, well, turns out that I hate DuPont connectors.  Crimping them sucks,
+(I don't have quite the right tool), but even with perfect crimping, after that, you're
+left with a DuPont connector, which inherently sucks anyway.
+
+<p>Then I started thinking of crazy ideas, like:
+
+<ol>
+<li>What if I soldered wires directly to male header pins?  No that's crazy, just
+holding the wires to solder them is too much of a pain in the ass.
+<li>What if I used a female dupont connector pin (just the pin) to hold the wire
+to the short end of the male header pin, and <em>then</em> soldered it.  That solves
+the difficulty of holding the wires when soldering.  But then the connection would
+be too brittle, and it would break.
+<li>What if I did that, then 3D printed a little housing, open on one side, put the
+soldered wire plus DuPont female pin plus male header pin contraption into this housing,
+and then sealed it inside plastic with a 3Doodler to make a custom connector with however
+many pins you want. The plastic will hold the fragile bits immobile.
+</ol>
+
+<p>I played around with that idea for a few minutes, but found the practical matter of
+soldering the wires, even with the DuPont connector pins holding things together, was
+just not working.  Could not make a strong connection reliably.  Plus crimping DuPont
+connectors just sucks. Didn't get as far as sealing the mess inside plastic with the 3Doodler
+before declaring this whole idea of making my own damn connectors to be insane, and
+abandoning it.
+
+<p>A friend suggested RJ11 4p4c jacks, plugs, and phone wire.  This would be neat, because
+my buttons have 4 wires, 2 for the LEDs, and 2 for the button. Digging around on amazon,
+at first this seemed to be too expensive.  But then digging around on aliexpress, the female
+jacks with wires are about $0.07 each, the male plugs are $0.0375 each, and 4 conductor
+phone cord is about $0.10 per foot. And a crimping tool for the plugs is around $8. That is
+affordable. I could make a little 3D printed housing to mount the female jacks into, and
+use the 3Doodler to weld those to the back of my buttons.  So far, this phone cord idea
+for wiring seems pretty good.
+<hr>
 <b>Sat 08 Jul 2023 10:36:44 AM EDT</b>
 Up to recently, I had been planning to use serial port over USB to communicate between the computer
 (e.g. Raspberry Pi 4) and the Arduino, mainly because doing that is easy.  However, this makes the
