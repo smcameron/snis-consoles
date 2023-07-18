@@ -19,6 +19,38 @@ people besides me may want to build something like this, and Arduino is the easi
 most well-known and popular thing in its class, and most likely to be something that
 other people will be <em>able</em> to work with.
 <hr>
+<b>Tue 18 Jul 2023 09:17:19 AM EDT</b>
+<p>Previously I mentioned that USB game controllers seemed to assume only one
+RGB LED, judging by SDL2's API:
+<blockquote>
+<pre>
+int SDL_GameControllerSetLED(SDL_GameController *gamecontroller, Uint8 red, Uint8 green, Uint8 blue);
+</pre>
+</blockquote>
+<p>However, it now occurs to me that this API could be used to individually control (turn on/off)
+up to 24 LEDs, and that is probably enough.
+<p>On second thought, an entire made-up protocol could be transmitted through this API,
+for example, maybe using the R byte as an opcode, and the G and B bytes as operands, and
+in this way any arbitrary data may be sent to the device.
+<p>I am assuming a bit about what happens when SDL_GameControllerSetLED() is called, namely
+I assume that it transmits some sort of command to the device with each call, rather than say,
+merely setting a register or variable in the driver that gets periodically polled or sent to
+the device on a time schedule, in which case the sequence of commands might not be preserved if
+multiple commands are sent in a single polling cycle.
+<p>However... looking at <a href="SDL3 source">https://github.com/libsdl-org/SDL/blob/main/src/joystick/linux/SDL_sysjoystick.c#L1544</a>...
+
+<blockquote>
+<pre>
+static int LINUX_JoystickSetLED(SDL_Joystick *joystick, Uint8 red, Uint8 green, Uint8 blue)
+{
+    return SDL_Unsupported();
+}
+</pre>
+</blockquote>
+<p>... sad trombone noises ...
+<p>OTOH, for joystick support, SNIS does not actually use SDL2, it uses read(2) to read from
+the joystick device file directly, so all hope is not lost.
+<hr>
 <b>Sun 16 Jul 2023 01:03:04 PM EDT</b>
 <p>Went ahead and ordered 200x 4p4c female RJ11 jacks with wires, 200x 4p4c male RJ11 plugs,
 200ft of 4 conductor modular phone cord, and a tool to crimp the plugs onto
