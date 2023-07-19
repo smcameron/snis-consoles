@@ -7,10 +7,10 @@ print_right_handle = 1;
 show_relative_positioning = 0;
 
 /* pipe dimensions */
-pipe_outer_radius = 10;
-pipe_clearance = 0.5;
+pipe_outer_radius = 0.5 * 15.5;
+pipe_clearance = 0.3;
 
-steering_shaft_radius = 15.0;
+steering_shaft_radius = 0.5 * 22.5;
 
 module finger_notch()
 {
