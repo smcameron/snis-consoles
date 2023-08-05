@@ -1,11 +1,11 @@
 steering_shaft_radius = 11;
-steering_shaft_tolerance = 0.75;
+steering_shaft_tolerance = 0.35;
 steering_shaft_elevation = 20; // fix this
 
 
 /* mount_height - mount_radius must equal 20 */
 mount_radius = steering_shaft_radius + 5;
-mount_height = 36;
+mount_height = 41.3;
 mount_width = mount_radius * 2;
 mount_thickness = 10;
 $fn = 100;
@@ -14,7 +14,7 @@ $fn = 100;
 module screw_hole()
 {
 	translate(v = [0, 0, 7])
-		cylinder(r1 = 4, r2 = 4, h = 50);
+		cylinder(r1 = 4.25, r2 = 4.25, h = 50);
 	cylinder(r1 = 2, r2 = 2, h = 50);
 }
 
@@ -41,7 +41,7 @@ module shaft_mount()
 			cube(size = [mount_width, 30, 5]);
 		/* translate(v = [-mount_width / 3, 7, -5])
 			screw_hole(); */
-		translate(v = [0, 7, -5])
+		translate(v = [0, 8, -5])
 			screw_hole();
 		translate(v = [mount_width / 3, 23, -5])
 			screw_hole();
@@ -60,5 +60,6 @@ module shaft_mount()
 	}
 }
 
-shaft_mount();
+translate(v = [0, -1, 0])
+	shaft_mount();
 
