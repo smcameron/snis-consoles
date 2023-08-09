@@ -13,7 +13,7 @@ $fn = 100;
 
 module pot_tab_hole()
 {
-	translate(v = [8, 30, -3])
+	translate(v = [13, 30, -3])
 		translate(v = [0, 8.5, 0])
 			cylinder(r1 = 1.8, r2 = 1.8, h = 10);
 }
@@ -39,7 +39,7 @@ module pot_plate()
 	difference() {
 		translate(v = [-5, 15, 0])
 			cube(size = [25, 30, 4]);
-		translate(v = [8, 30, -2])
+		translate(v = [13, 30, -2])
 			cylinder(r1 = pot_shaft_hole_radius, r2 = pot_shaft_hole_radius, h = 20);
 		pot_tab_hole();
 		translate(v = [-5.1, 0, -0.1])
