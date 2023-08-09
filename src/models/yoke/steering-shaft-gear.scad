@@ -30,11 +30,11 @@ module steering_shaft_gear()
 
 module steering_potentiometer_gear()
 {
-	herringbone_gear(pitch_diameter = 12, bore_diameter = 6);
+	herringbone_gear(pitch_diameter = 24, bore_diameter = 6);
 }
 
 steering_shaft_gear();
-translate(v = [30, 0, 0])
+translate(v = [40, 0, 0])
 	steering_potentiometer_gear();
 
 
