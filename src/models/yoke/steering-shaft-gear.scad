@@ -1,6 +1,9 @@
 
 // This include file is from:
+// git@github.com:smcameron/meshing-gears-OpenSCAD.git
+// which is a fork of
 // git@github.com:brhubbar/meshing-gears-OpenSCAD.git
+
 include <../../../../meshing-gears-OpenSCAD/src/meshing_gears.scad>
 
 $fn=100;
