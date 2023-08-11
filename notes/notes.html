@@ -19,6 +19,36 @@ people besides me may want to build something like this, and Arduino is the easi
 most well-known and popular thing in its class, and most likely to be something that
 other people will be <em>able</em> to work with.
 <hr>
+<b>Fri 11 Aug 2023 07:31:53 AM EDT</b>
+<p>I got my homemade flight yoke working.  Here's a
+<a href="https://www.youtube.com/watch?v=5CBHHVQStsk">video of it</a>.
+<p>
+<ul>
+<li>OpenSCAD files for
+<a href="https://github.com/smcameron/snis-consoles/tree/master/src/models/yoke">all the 3D printed
+parts are in here</a>.
+<li>There is
+<a href="https://github.com/smcameron/space-nerds-in-space/blob/master/arduino/yoketest.ino">
+a very simple Arduino program to send the axis position data to the
+main computer running snis_client via USB "serial" here</a>
+<li>There is
+<a href="https://github.com/smcameron/space-nerds-in-space/blob/master/yoke-test-program.c">another
+program to read the data from the arduino program and feed it into snis_client here</a>.
+</ul>
+<p>To use all this:
+<ol>
+<li>3D print all the parts and assemble the yoke, connect the two outer pins of each
+potentiometer to +5V and GND, and the center pin to the Arduino A1 and A2 analog input pins.
+<li>chown /dev/ttyACM0 to your normal linux username
+<li>Build the arduino program and flash it on to the Arduino.
+<li>start SNIS as usual (use snis_launcher).
+<li>Build and run the yoke-test-program ("make bin/yoke-test-program; bin/yoke-test-program")
+<li>Enjoy flying your spaceship around with the yoke.
+</ol>
+<p>This is all just test code at this point.  I plan to integrate this yoke into a larger
+simulator control panel.  I will probably move to using a Raspberry Pi pico rather than
+an Arduino because it just makes more sense price/feature-wise.
+<hr>
 <b>Mon 31 Jul 2023 12:54:27 PM EDT</b>
 <p>Received 200x 4p4c plugs and crimping tool.
 <hr>
