@@ -17,6 +17,12 @@ built around inexpensive tactile switches, some 3d printable panels to hold thes
 buttons and allow mounting into a "dashboard", some 3d printable panels for mounting
 potentiometers and faders which can then mounted in a dashboard.
 
+NOTE: for the gears and rack and pinion in the flight yoke model, you will
+need to clone two additional repositories alongside this repository:
+
+* git@github.com:smcameron/Rack-Pinion-openscadLib.git
+* git@github.com:smcameron/meshing-gears-OpenSCAD.git
+
 Here are some notes on my progress so far:
 
 * [Notes](https://spacenerdsinspace.com/snis-consoles/notes.html)
