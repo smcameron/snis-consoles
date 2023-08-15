@@ -1,6 +1,6 @@
 
-rows=1;
-cols=5;
+rows=2;
+cols=2;
 
 include <large-switch-array-holder.scad>
 

@@ -1,8 +1,8 @@
 
-rows=5;
+rows=2;
 cols=2;
 
 include <large-switch-array-holder.scad>
 
-switch_array_holder(rows, cols);
+switch_holder_retaining_gasket(rows, cols);
 
