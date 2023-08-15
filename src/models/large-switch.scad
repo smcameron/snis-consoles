@@ -6,10 +6,10 @@ thickness = 1.5;
 outer_width = width + 2 * thickness;
 outer_height = height + 2 * thickness;
 button_frame_width = 3;
-button_pusher_frame_depth = 12;
-main_case_depth = 31.5;
+button_pusher_frame_depth = 7;
+main_case_depth = 26.5;
 clearance = 0.2;
-button_pusher_length = 24.35;
+button_pusher_length = 19.35;
 holder_floor_thickness = 1.8;
 
 $fn=100;
