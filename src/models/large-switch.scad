@@ -124,9 +124,9 @@ module button_pusher()
 module button_lead_hole(x, y)
 {
 	translate(v = [0, x, y]) {
-		translate(v = [0, outer_width * 0.5, outer_height * 0.5]) {
+		translate(v = [2, outer_width * 0.5, outer_height * 0.5]) {
 			rotate(v = [0, 1, 0], a = 90)
-				cylinder(h = 20, r1 = 1.25, r2 = 1.25, center = true);
+				cylinder(h = 9, r1 = 2.5, r2 = 1.0, center = true);
 		}
 	}
 }
@@ -174,9 +174,9 @@ module button_holder()
 			centered_cube(width - 2 * clearance, height - 2 * clearance, 4.0 * thickness);
 			centered_cube(outer_width, outer_height, 2.0 * thickness);
 		}
-		button_holder_holes();
 		translate(v = [0, 0, 1.5 * thickness])
 			centered_cube(6.5, 6.5, 4 * thickness);
+		button_holder_holes();
 	}
 	translate(v = [0, 0, 4 * thickness])
 		friction_arms(0.5 * width - 1.5 - 0.5 * clearance, 0.5 * height - 1.5 - 0.5 * clearance);
