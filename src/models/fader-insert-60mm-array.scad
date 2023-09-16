@@ -168,7 +168,7 @@ module fader_60mm_array_insert(x, y, spacing, count)
 			cube(size = [0.95 * plate_width, web_thickness, web_height], center = true);
 	}
 	}
-		panel_snap_arms();
+		/* panel_snap_arms(); */
 	}
 }
 
