@@ -160,12 +160,22 @@ module fader_60mm_array_insert(x, y, spacing, count)
 				fader_screw_hole((count + 1) * spacing - 4, plate_height / 2 - 4, 0.5 * 3, 0.5 * 5, plate_thickness + 2, countersink);
 			}
 			}
+			/* Corner screw holes */
+			translate(v = [6, 0.5 * plate_height - 6, 0])
+				cylinder(h = 20, r1 = 2, r2 = 2, center = true);
+			translate(v = [6, -0.5 * plate_height + 6, 0])
+				cylinder(h = 20, r1 = 2, r2 = 2, center = true);
+			translate(v = [plate_width - 6, -0.5 * plate_height + 6, 0])
+				cylinder(h = 20, r1 = 2, r2 = 2, center = true);
+			translate(v = [plate_width - 6, 0.5 * plate_height - 6, 0])
+				cylinder(h = 20, r1 = 2, r2 = 2, center = true);
 		}
 		fader_60mm_snap_arm_array(x + side_margin, y, spacing, count);
-		translate(v = [0.5 * plate_width, 0.45 * plate_height, -0.5 * web_height])
+		translate(v = [0.5 * plate_width, 0.41 * plate_height, -0.5 * web_height])
 			cube(size = [0.95 * plate_width, web_thickness, web_height], center = true);
-		translate(v = [0.5 * plate_width, -0.45 * plate_height, -0.5 * web_height])
+		translate(v = [0.5 * plate_width, -0.41 * plate_height, -0.5 * web_height])
 			cube(size = [0.95 * plate_width, web_thickness, web_height], center = true);
+
 	}
 	}
 		/* panel_snap_arms(); */
