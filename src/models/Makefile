@@ -8,7 +8,8 @@ all: switch.stl \
 	nav-2x5-large-switch-array-holder.stl \
 	case_siding.dxf \
 	lasercut-lenses.dxf \
-	lower-panel.dxf
+	lower-panel.dxf \
+	upper-panel.dxf
 
 clean:
 	/bin/rm -f *.stl *.dxf
@@ -54,5 +55,8 @@ lasercut-lenses.dxf:	lasercut-lenses.scad
 	openscad -o $@ $<
 
 lower-panel.dxf:	lower-panel.scad
+	openscad -o $@ $<
+
+upper-panel.dxf:	upper-panel.scad
 	openscad -o $@ $<
 
